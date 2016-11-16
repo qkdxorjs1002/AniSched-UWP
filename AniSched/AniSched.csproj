@@ -119,10 +119,6 @@
     <None Include="AniSched_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Rani\rani0.png" />
-    <Content Include="Assets\Rani\rani1.png" />
-    <Content Include="Assets\Rani\rani2.png" />
-    <Content Include="Assets\Rani\rani3.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />

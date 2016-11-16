@@ -82,11 +82,11 @@
             </Grid>
         </ControlTemplate>
     </Page.Resources>
-    <SplitView x:Name="MainSplitView" OpenPaneLength="320" PaneBackground="#FFFE3B72">
+    <SplitView x:Name="MainSplitView" OpenPaneLength="350" PaneBackground="#FFFE3B72">
         <SplitView.Pane>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="9*"/>
                     <RowDefinition Height="7*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
@@ -99,7 +99,7 @@
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="ExtraButton" Grid.Column="0" Content="&#xEA37;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" Width="50" Height="50" Background="{x:Null}" Padding="0" BorderThickness="0" BorderBrush="{x:Null}" FontSize="24" FontWeight="Bold" Click="ExtraButton_Click" Foreground="#FFFAFAFA">
+                        <Button x:Name="ExtraButton" Grid.Column="0" Content="&#xEA37;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" Width="50" Height="50" Background="{x:Null}" Padding="0" BorderThickness="0" BorderBrush="{x:Null}" FontSize="24" FontWeight="Bold" Click="ExtraButton_Click" Foreground="#FFFAFAFA" Template="{StaticResource BtnControlTemplate}">
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout x:Name="ExtraMenuFloyout" Placement="Bottom" >
                                     <MenuFlyoutItem Text="나무위키에서 검색" Click="MenuFlyoutItem_Click"/>
@@ -110,8 +110,7 @@
                         </Button>
                         <TextBlock x:Name="CapListTitle" Grid.Column="1" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="20" VerticalAlignment="Center" Margin="0,0,5,0" TextTrimming="CharacterEllipsis" TextAlignment="Center" Foreground="#FFFAFAFA" />
                     </Grid>
-                    <Image x:Name="CapListRani" Grid.Row="1" VerticalAlignment="Top"/>
-                    <Image x:Name="CapListImage" Grid.Row="1" Stretch="UniformToFill" ImageFailed="CapListImage_ImageFailed"/>
+                    <Image x:Name="CapListImage" Grid.Row="1" Stretch="UniformToFill" ImageFailed="CapListImage_ImageFailed" HorizontalAlignment="Center"/>
                     <Grid Grid.Row="1" Height="100" VerticalAlignment="Bottom" Background="#7F000000">
                         <Ellipse x:Name="CapListStatus" Width="15" Height="15" Margin="10,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" />
                         <StackPanel VerticalAlignment="Center" Margin="20,0">
@@ -194,7 +193,7 @@
             </Grid>
         </SplitView.Pane>
         <SplitView.Content>
-            <SplitView x:Name="TabSplitView" DisplayMode="CompactOverlay" CompactPaneLength="50" OpenPaneLength="320" PaneBackground="#FFFE3B72">
+            <SplitView x:Name="TabSplitView" DisplayMode="CompactOverlay" CompactPaneLength="50" OpenPaneLength="350" PaneBackground="#FFFE3B72">
                 <SplitView.Pane>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -206,34 +205,58 @@
                                 <Button x:Name="SearchButton" FontFamily="Segoe MDL2 Assets" Content="&#xE094;" Width="50" Height="50" Background="Transparent" Foreground="#FFFAFAFA" BorderThickness="0" Click="SearchButton_Click" FontWeight="Bold" FontSize="16" Template="{StaticResource BtnControlTemplate}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="SunButton" Content="日" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                <Grid>
+                                    <Grid x:Name="SunIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA" />
+                                    <Button x:Name="SunButton" Content="日" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="MonButton" Content="月" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                <Grid>
+                                    <Grid x:Name="MonIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
+                                    <Button x:Name="MonButton" Content="月" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="TueButton" Content="火" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                <Grid>
+                                    <Grid x:Name="TueIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
+                                    <Button x:Name="TueButton" Content="火" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="WedButton" Content="水" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                <Grid>
+                                    <Grid x:Name="WedIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
+                                    <Button x:Name="WedButton" Content="水" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="ThuButton" Content="木" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                <Grid>
+                                    <Grid x:Name="ThuIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
+                                    <Button x:Name="ThuButton" Content="木" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="FriButton" Content="金" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                <Grid>
+                                    <Grid x:Name="FriIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
+                                    <Button x:Name="FriButton" Content="金" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="SatButton" Content="土" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                <Grid>
+                                    <Grid x:Name="SatIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
+                                    <Button x:Name="SatButton" Content="土" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="OvaButton" Content="外" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                <Grid>
+                                    <Grid x:Name="OvaIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
+                                    <Button x:Name="OvaButton" Content="外" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button x:Name="NewButton" Content="新" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Button x:Name="AllButton" Content="摠" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="AllButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                <Grid>
+                                    <Grid x:Name="NewIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
+                                    <Button x:Name="NewButton" Content="新" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
                             </StackPanel>
                         </StackPanel>
                         <Grid Grid.Column="1">
@@ -241,7 +264,7 @@
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="SearchTextBox" Grid.Row="0" Margin="10,9" Background="#FFFAFAFA" SelectionHighlightColor="#FFFE3B72" InputScope="Search" />
+                            <TextBox x:Name="SearchTextBox" Grid.Row="0" Margin="10,9" Background="#FFFAFAFA" SelectionHighlightColor="#FFFE3B72" InputScope="Search" TextChanged="SearchTextBox_TextChanged" />
                             <ListView x:Name="SearchListView" Grid.Row="1" Margin="0" IsSwipeEnabled="False" Foreground="#FFFAFAFA" ItemClick="AniListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">

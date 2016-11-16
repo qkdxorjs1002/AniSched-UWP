@@ -8,17 +8,26 @@ namespace AniSched
 {
     public enum JsType { List, End, Capton };
     public enum Days { Sun, Mon, Tue, Wed, Thu, Fri, Sat, Ova, New };
-    
+
     class DataTypes
     {
 
         public class HttpData
         {
+            public int dataCode { get; set; }
             public int statusCode { get; set; }
             public string jsonData { get; set; }
 
-            public HttpData(int statusCode, string jsonData)
+            public HttpData()
             {
+                this.dataCode = 0;
+                this.statusCode = 0;
+                this.jsonData = null;
+            }
+
+            public HttpData(int dataCode, int statusCode, string jsonData)
+            {
+                this.dataCode = dataCode;
                 this.statusCode = statusCode;
                 this.jsonData = jsonData;
 
@@ -28,6 +37,8 @@ namespace AniSched
 
         public class ListData
         {
+            public int iid { get; set; }    // Code
+            public int iis { get; set; }    // Code
             public int i { get; set; }      // ID
             public string s { get; set; }   // Title / Chapter
             public string t { get; set; }   // Time

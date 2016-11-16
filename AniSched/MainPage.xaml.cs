@@ -29,14 +29,17 @@ namespace AniSched
         public MainPage()
         {
             this.InitializeComponent();
-            MainFunction.Painter();
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+
+            if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
             {
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += OnHardwareButtonsBackPressed;
+                HardwareButtons.BackPressed += OnHardwareButtonsBackPressed;
             }
+
+            MainFunction.gridList = new Grid[] { SunIndicator, MonIndicator, TueIndicator, WedIndicator, ThuIndicator, FriIndicator, SatIndicator, OvaIndicator, NewIndicator };
 
             MainFunction.LoadList(AniListView, JsType.List
                 , (Days)Enum.Parse(typeof(Days), DateTime.Now.DayOfWeek.ToString().Remove(3)));
+            MainFunction.InitIndicator(DateTime.Now.DayOfWeek.ToString().Remove(3));
 
         }
 
@@ -44,23 +47,29 @@ namespace AniSched
         {
             e.Handled = true;
 
-            //if (ChildGrid.Visibility == Visibility.Visible)
-            //{
-            //    Image_Animation.Stop();
-            //    ChildGrid.Visibility = Visibility.Collapsed;
-            //    Grid_Animation.Stop();
-            //    SearchList.IsEnabled = true;
-            //}
-            //else
-            //{
-            //    App.Current.Exit();
-            //}
+            if (MainSplitView.IsPaneOpen == true || TabSplitView.IsPaneOpen == true)
+            {
+                MainSplitView.IsPaneOpen = false;
+                TabSplitView.IsPaneOpen = false;
+
+            }
+            else
+            {
+                App.Current.Exit();
+
+            }
+
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            TabSplitView.IsPaneOpen = TabSplitView.IsPaneOpen == true ? false : true;
+            if (TabSplitView.IsPaneOpen == false)
+            {
+                MainFunction.LoadList(SearchListView, JsType.List);
+            }
 
+            TabSplitView.IsPaneOpen = TabSplitView.IsPaneOpen == true ? false : true;
+            
         }
 
         private void DayButton_Click(object sender, RoutedEventArgs e)
@@ -74,20 +83,19 @@ namespace AniSched
             callerObjectName = callerObject.Name.Remove(3);
             targetDay = (Days)Enum.Parse(typeof(Days), callerObjectName).GetHashCode();
 
+            MainFunction.InitIndicator(callerObjectName);
             MainFunction.LoadList(AniListView, JsType.List, targetDay);
-            MainFunction.LoadList(SearchListView, JsType.List, targetDay);
-
-        }
-
-        private void AllButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainFunction.LoadList(AniListView, JsType.List);
 
         }
 
         private void AniListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             DataTypes.ListData callerObject = e.ClickedItem as DataTypes.ListData;
+
+            if (callerObject.iis == 404)
+            {
+                return;
+            }
 
             MainFunction.LoadList(CapListView, callerObject.i);
             CapListImage.Source = new BitmapImage(new Uri("http://anisched.moeru.ga/" + callerObject.i + ".jpg", UriKind.Absolute));
@@ -105,7 +113,11 @@ namespace AniSched
         {
             DataTypes.ListData callerObject = e.ClickedItem as DataTypes.ListData;
 
-            await Windows.System.Launcher.LaunchUriAsync(new Uri(callerObject.a));
+            if (callerObject.a != null)
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri(callerObject.a));
+            }
+
         }
 
         private void ExtraButton_Click(object sender, RoutedEventArgs e)
@@ -117,7 +129,7 @@ namespace AniSched
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             MenuFlyoutItem callerObject = sender as MenuFlyoutItem;
-            Uri url = new Uri((callerObject.Text == "나무위키에서 검색" ? ("https://namu.wiki/go/") 
+            Uri url = new Uri((callerObject.Text == "나무위키에서 검색" ? ("https://namu.wiki/go/")
                 : ("https://search.naver.com/search.naver?&query=")) + CapListTitle.Text);
 
             await Windows.System.Launcher.LaunchUriAsync(url);
@@ -125,15 +137,28 @@ namespace AniSched
 
         private void CapListImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            CapListRani.Source = new BitmapImage(new Uri("http://anisched.moeru.ga/" + MainFunction.RandomImage(), UriKind.Absolute));
+            CapListImage.Source = new BitmapImage(new Uri("http://anisched.moeru.ga/" + MainFunction.RandomImage(), UriKind.Absolute));
+
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox callerObject = sender as TextBox;
+
+            MainFunction.SearchList(SearchListView, JsType.List, callerObject.Text);
 
         }
     }
 
     public static class MainFunction
     {
+        const String STRING_LE404 = "[{\"s\":\"오류\",\"t\":\"원인\",\"g\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
+        const String STRING_CE404 = "[{\"s\":\"오류\",\"d\":\"원인\",\"n\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
+
         static DataTypes.ListData[] listData;
+        static DataTypes.ListData[] allListData;
         static DataTypes.HttpData httpData;
+        public static Grid[] gridList;
 
         static JsonRequester jsonRequester = new JsonRequester("http://www.anissia.net/anitime/", "list?w=", "end?p=", "cap?i=");
         static JsonParser jsonParser = new JsonParser();
@@ -167,7 +192,7 @@ namespace AniSched
 
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                var statusBar = StatusBar.GetForCurrentView();
 
                 if (statusBar != null)
                 {
@@ -189,21 +214,40 @@ namespace AniSched
             byte g = (byte)(Convert.ToUInt32(hexColor.Substring(4, 2), 16));
             byte b = (byte)(Convert.ToUInt32(hexColor.Substring(6, 2), 16));
 
-            return new SolidColorBrush(Windows.UI.Color.FromArgb(a, r, g, b));
+            return new SolidColorBrush(Color.FromArgb(a, r, g, b));
         }
 
         public static String RandomImage()
         {
             Random rand = new Random();
-            int targetNum = rand.Next() % 20;
-            
+            int targetNum = rand.Next() % 50;
+
             return ("rand" + targetNum + ".png");
+        }
+
+        public static void InitIndicator(String targetDay)
+        {
+            foreach (Grid ld in gridList)
+            {
+                ld.Visibility = (targetDay == ld.Name.Remove(3) ? Visibility.Visible : Visibility.Collapsed);
+
+            }
+
         }
 
         public async static void LoadList(ListView targetObject, JsType targetJsType, Days targetDay)
         {
-            httpData = await jsonRequester.Request(targetJsType, (int)targetDay);
-            listData = jsonParser.Parse(httpData.jsonData);
+            try
+            {
+                httpData = await jsonRequester.Request(targetJsType, (int)targetDay);
+
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                httpData = new DataTypes.HttpData((int)targetDay, 404, STRING_LE404);
+            }
+
+            listData = jsonParser.Parse(httpData);
             dataRefiner.ListDataRefine(listData);
             dataBinder.DataBind(targetObject, listData);
 
@@ -211,8 +255,16 @@ namespace AniSched
 
         public async static void LoadList(ListView targetObject, int targetId)
         {
-            httpData = await jsonRequester.Request(JsType.Capton, targetId);
-            listData = jsonParser.Parse(httpData.jsonData);
+            try
+            {
+                httpData = await jsonRequester.Request(JsType.Capton, targetId);
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                httpData = new DataTypes.HttpData(targetId, 404, STRING_CE404);
+            }
+
+            listData = jsonParser.Parse(httpData);
             dataRefiner.CaptionDataRefine(listData);
             dataBinder.DataBind(targetObject, listData);
 
@@ -221,20 +273,32 @@ namespace AniSched
         public async static void LoadList(ListView targetObject, JsType targetJsType)
         {
             DataTypes.HttpData tmpData;
-            httpData = new DataTypes.HttpData(0, "");
+            httpData = new DataTypes.HttpData();
 
-            for (int i = 0; i <= 8; i++)
+            try
             {
-                tmpData = await jsonRequester.Request(targetJsType, i);
-                httpData.jsonData += tmpData.jsonData;
-                httpData.statusCode = tmpData.statusCode;
-                Debug.WriteLine(httpData.statusCode);
+                for (int i = 0; i <= 8; i++)
+                {
+                    tmpData = await jsonRequester.Request(targetJsType, i);
+                    httpData.jsonData += tmpData.jsonData;
+                    httpData.statusCode = tmpData.statusCode;
 
+                }
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                httpData = new DataTypes.HttpData(-1, 404, STRING_LE404);
             }
 
-            listData = jsonParser.Parse(httpData.jsonData);
-            dataRefiner.ListDataRefine(listData);
-            dataBinder.DataBind(targetObject, listData);
+            allListData = jsonParser.Parse(httpData);
+            dataRefiner.ListDataRefine(allListData);
+            dataBinder.DataBind(targetObject, allListData, null);
+
+        }
+
+        public static void SearchList(ListView targetObject, JsType targetJsType, String targetStr)
+        {
+            dataBinder.DataBind(targetObject, allListData, targetStr);
 
         }
 

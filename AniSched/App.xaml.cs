@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -46,6 +47,10 @@ namespace AniSched
             }
 #endif
             Frame rootFrame = Window.Current.Content as Frame;
+            
+            ApplicationView.PreferredLaunchViewSize = new Size(500, 850);
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(500, 850));
+            MainFunction.Painter();
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active

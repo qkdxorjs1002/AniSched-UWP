@@ -25,7 +25,7 @@ namespace AniSched
             this.captionUrl = captionUrl;
 
         }
-        
+
         public async Task<DataTypes.HttpData> Request(JsType jsType, int id)
         {
             string uri = baseUrl;
@@ -45,7 +45,7 @@ namespace AniSched
 
             httpResponse = await httpClient.GetAsync(new Uri(uri + id));
 
-            return new DataTypes.HttpData(httpResponse.StatusCode.GetHashCode()
+            return new DataTypes.HttpData(id, httpResponse.StatusCode.GetHashCode()
                 , await httpResponse.Content.ReadAsStringAsync());
         }
 
