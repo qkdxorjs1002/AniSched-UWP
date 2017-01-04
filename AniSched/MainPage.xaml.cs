@@ -63,13 +63,35 @@ namespace AniSched
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
+            JsType targetType = new JsType();
+
             if (TabSplitView.IsPaneOpen == false)
             {
-                MainFunction.LoadList(SearchListView, JsType.List);
+                switch(IsEnd_CheckBox.IsChecked)
+                {
+                    case true:
+                        targetType = JsType.End;
+                        break;
+
+                    case false:
+                        targetType = JsType.List;
+                        break;
+
+                }
+                MainFunction.LoadList(SearchListView, targetType);
+
             }
 
             TabSplitView.IsPaneOpen = TabSplitView.IsPaneOpen == true ? false : true;
             
+        }
+
+        private void SettingButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingView.Visibility = Visibility.Visible;
+            CaptionView.Visibility = Visibility.Collapsed;
+            MainSplitView.IsPaneOpen = true;
+
         }
 
         private void DayButton_Click(object sender, RoutedEventArgs e)
@@ -94,17 +116,21 @@ namespace AniSched
 
             if (callerObject.iis == 404)
             {
-                return;
+                return ;
             }
+
+            CaptionView.Visibility = Visibility.Visible;
+            SettingView.Visibility = Visibility.Collapsed;
 
             MainFunction.LoadList(CapListView, callerObject.i);
             CapListImage.Source = new BitmapImage(new Uri("http://anisched.moeru.ga/" + callerObject.i + ".jpg", UriKind.Absolute));
+            CaptionIDText.Text = callerObject.i.ToString();
             CapListTitle.Text = callerObject.s;
             CapListGenre.Text = callerObject.g;
             CapListStart.Text = callerObject.sd;
             CapListEnd.Text = callerObject.ed;
             CapListLink.Text = callerObject.l;
-            CapListStatus.Fill = MainFunction.ConvertColor(callerObject.a);
+            CapListStatus.Fill = new SolidColorBrush(MainFunction.ConvertColor(callerObject.a));
             MainSplitView.IsPaneOpen = true;
 
         }
@@ -113,7 +139,7 @@ namespace AniSched
         {
             DataTypes.ListData callerObject = e.ClickedItem as DataTypes.ListData;
 
-            if (callerObject.a != null)
+            if (callerObject.a != "http://")
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri(callerObject.a));
             }
@@ -135,6 +161,27 @@ namespace AniSched
             await Windows.System.Launcher.LaunchUriAsync(url);
         }
 
+        private void SearchExtraButton_Click(object sender, RoutedEventArgs e)
+        {
+            SearchExtraMenuFloyout.ShowAt(SearchExtraButton);
+
+        }
+
+        private void ToggleMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleMenuFlyoutItem callerObject = sender as ToggleMenuFlyoutItem;
+
+            if (callerObject.IsChecked == true)
+            {
+                MainFunction.LoadList(SearchListView, JsType.End);
+            }
+            else if (callerObject.IsChecked == false)
+            {
+                MainFunction.LoadList(SearchListView, JsType.List);
+            }
+
+        }
+
         private void CapListImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)
         {
             CapListImage.Source = new BitmapImage(new Uri("http://anisched.moeru.ga/" + MainFunction.RandomImage(), UriKind.Absolute));
@@ -148,6 +195,99 @@ namespace AniSched
             MainFunction.SearchList(SearchListView, JsType.List, callerObject.Text);
 
         }
+
+        private async void CapListLink_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            TextBlock callerObject = sender as TextBlock;
+
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(callerObject.Text));
+        }
+
+        private void ResetSettings_Click(object sender, RoutedEventArgs e)
+        {
+            ColorSettings_Pink.IsChecked = true;
+
+        }
+
+        private void ColorSettings_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton callerObject = sender as RadioButton;
+            String targetBsColor;
+
+            switch (callerObject.Name.Remove(0, 14))
+            {
+                case "Pink":
+                    targetBsColor = "#FFFE3B72";
+                    break;
+                case "Purple":
+                    targetBsColor = "#FFD500F9";
+                    break;
+                case "Blue":
+                    targetBsColor = "#FF448AFF";
+                    break;
+                case "Cyan":
+                    targetBsColor = "#FF00BCD4";
+                    break;
+                case "Teal":
+                    targetBsColor = "#FF009688";
+                    break;
+                case "Amber":
+                    targetBsColor = "#FFFF8F00";
+                    break;
+                case "Orange":
+                    targetBsColor = "#FFFF5722";
+                    break;
+                case "Grey":
+                    targetBsColor = "#FF607D8B";
+                    break;
+                default:
+                    targetBsColor = "#FFFE3B72";
+                    break;
+            }
+            
+            if (MainFunction.localSettings.Values["customBaseColor"].ToString() != targetBsColor)
+            {
+                RestartAlert.Visibility = Visibility.Visible;
+                MainFunction.localSettings.Values["customBaseColor"] = targetBsColor;
+            }
+
+        }
+
+        private void ColorSettings_Loaded(object sender, RoutedEventArgs e)
+        {
+            switch (MainFunction.localSettings.Values["customBaseColor"].ToString())
+            {
+                case "#FFFE3B72":
+                    ColorSettings_Pink.IsChecked = true;
+                    break;
+                case "#FFD500F9":
+                    ColorSettings_Purple.IsChecked = true;
+                    break;
+                case "#FF448AFF":
+                    ColorSettings_Blue.IsChecked = true;
+                    break;
+                case "#FF00BCD4":
+                    ColorSettings_Cyan.IsChecked = true;
+                    break;
+                case "#FF009688":
+                    ColorSettings_Teal.IsChecked = true;
+                    break;
+                case "#FFFF8F00":
+                    ColorSettings_Amber.IsChecked = true;
+                    break;
+                case "#FFFF5722":
+                    ColorSettings_Orange.IsChecked = true;
+                    break;
+                case "#FF607D8B":
+                    ColorSettings_Grey.IsChecked = true;
+                    break;
+                default:
+                    ColorSettings_Pink.IsChecked = true;
+                    break;
+            }
+
+        }
+
     }
 
     public static class MainFunction
@@ -155,10 +295,14 @@ namespace AniSched
         const String STRING_LE404 = "[{\"s\":\"오류\",\"t\":\"원인\",\"g\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
         const String STRING_CE404 = "[{\"s\":\"오류\",\"d\":\"원인\",\"n\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
 
+        public static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        public static StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+
         static DataTypes.ListData[] listData;
         static DataTypes.ListData[] allListData;
         static DataTypes.HttpData httpData;
         public static Grid[] gridList;
+        public static string[] settingList;
 
         static JsonRequester jsonRequester = new JsonRequester("http://www.anissia.net/anitime/", "list?w=", "end?p=", "cap?i=");
         static JsonParser jsonParser = new JsonParser();
@@ -167,26 +311,22 @@ namespace AniSched
 
         public static void Painter()
         {
-            var MAColor = Color.FromArgb(255, 254, 59, 114);     // TH
-            var MBColor = Color.FromArgb(255, 250, 250, 250);    // FG
-            var MCColor = Color.FromArgb(255, 25, 25, 25);       // BG
-
             if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
             {
                 ApplicationView AppVCon = ApplicationView.GetForCurrentView();
 
-                AppVCon.TitleBar.BackgroundColor = MAColor;
-                AppVCon.TitleBar.ButtonBackgroundColor = MAColor;
-                AppVCon.TitleBar.ButtonHoverBackgroundColor = MAColor;
-                AppVCon.TitleBar.ButtonInactiveBackgroundColor = MAColor;
-                AppVCon.TitleBar.ButtonPressedBackgroundColor = MBColor;
-                AppVCon.TitleBar.InactiveBackgroundColor = MAColor;
-                AppVCon.TitleBar.ForegroundColor = MBColor;
-                AppVCon.TitleBar.ButtonForegroundColor = MBColor;
-                AppVCon.TitleBar.ButtonHoverForegroundColor = MCColor;
-                AppVCon.TitleBar.ButtonInactiveForegroundColor = MBColor;
-                AppVCon.TitleBar.ButtonPressedForegroundColor = MCColor;
-                AppVCon.TitleBar.InactiveForegroundColor = MBColor;
+                AppVCon.TitleBar.BackgroundColor = ConvertColor(localSettings.Values["customBaseColor"].ToString());
+                AppVCon.TitleBar.ButtonBackgroundColor = ConvertColor(localSettings.Values["customBaseColor"].ToString());
+                AppVCon.TitleBar.ButtonHoverBackgroundColor = ConvertColor(localSettings.Values["customBaseColor"].ToString());
+                AppVCon.TitleBar.ButtonInactiveBackgroundColor = ConvertColor(localSettings.Values["customBaseColor"].ToString());
+                AppVCon.TitleBar.ButtonPressedBackgroundColor = ConvertColor(localSettings.Values["customAccentForgroundColor"].ToString());
+                AppVCon.TitleBar.InactiveBackgroundColor = ConvertColor(localSettings.Values["customBaseColor"].ToString());
+                AppVCon.TitleBar.ForegroundColor = ConvertColor(localSettings.Values["customAccentForgroundColor"].ToString());
+                AppVCon.TitleBar.ButtonForegroundColor = ConvertColor(localSettings.Values["customAccentForgroundColor"].ToString());
+                AppVCon.TitleBar.ButtonHoverForegroundColor = ConvertColor(localSettings.Values["customAccentForgroundColor_alt"].ToString());
+                AppVCon.TitleBar.ButtonInactiveForegroundColor = ConvertColor(localSettings.Values["customAccentForgroundColor"].ToString());
+                AppVCon.TitleBar.ButtonPressedForegroundColor = ConvertColor(localSettings.Values["customAccentForgroundColor_alt"].ToString());
+                AppVCon.TitleBar.InactiveForegroundColor = ConvertColor(localSettings.Values["customAccentForgroundColor"].ToString());
 
             }
 
@@ -197,8 +337,8 @@ namespace AniSched
                 if (statusBar != null)
                 {
                     statusBar.BackgroundOpacity = 1.0f;
-                    statusBar.BackgroundColor = MAColor;
-                    statusBar.ForegroundColor = MBColor;
+                    statusBar.BackgroundColor = ConvertColor(localSettings.Values["customBaseColor"].ToString());
+                    statusBar.ForegroundColor = ConvertColor(localSettings.Values["customAccentForgroundColor"].ToString());
 
                 }
 
@@ -206,7 +346,7 @@ namespace AniSched
 
         }
 
-        public static SolidColorBrush ConvertColor(string hexColor)
+        public static Color ConvertColor(string hexColor)
         {
             hexColor = hexColor.Replace("#", string.Empty);
             byte a = (byte)(Convert.ToUInt32(hexColor.Substring(0, 2), 16));
@@ -214,7 +354,22 @@ namespace AniSched
             byte g = (byte)(Convert.ToUInt32(hexColor.Substring(4, 2), 16));
             byte b = (byte)(Convert.ToUInt32(hexColor.Substring(6, 2), 16));
 
-            return new SolidColorBrush(Color.FromArgb(a, r, g, b));
+            return Color.FromArgb(a, r, g, b);
+        }
+
+        public static Color ConvertColor(string hexColor, sbyte bright)
+        {
+            hexColor = hexColor.Replace("#", string.Empty);
+            byte a = (byte)(Convert.ToUInt32(hexColor.Substring(0, 2), 16));
+            byte r = (byte)(Convert.ToUInt32(hexColor.Substring(2, 2), 16));
+            byte g = (byte)(Convert.ToUInt32(hexColor.Substring(4, 2), 16));
+            byte b = (byte)(Convert.ToUInt32(hexColor.Substring(6, 2), 16));
+            
+            r = (byte)(r + bright > 255 ? 255 : (r + bright < 0 ? 0 : r + bright));
+            g = (byte)(g + bright > 255 ? 255 : (g + bright < 0 ? 0 : g + bright));
+            b = (byte)(b + bright > 255 ? 255 : (b + bright < 0 ? 0 : b + bright));
+
+            return Color.FromArgb(a, r, g, b);
         }
 
         public static String RandomImage()
@@ -274,23 +429,23 @@ namespace AniSched
         {
             DataTypes.HttpData tmpData;
             httpData = new DataTypes.HttpData();
+            for (int i = 0; i <= 8; i++)
+            {
+                tmpData = await jsonRequester.Request(targetJsType, i);
+                httpData.jsonData += tmpData.jsonData;
+                httpData.statusCode = tmpData.statusCode;
+            }
 
             try
             {
-                for (int i = 0; i <= 8; i++)
-                {
-                    tmpData = await jsonRequester.Request(targetJsType, i);
-                    httpData.jsonData += tmpData.jsonData;
-                    httpData.statusCode = tmpData.statusCode;
-
-                }
+                allListData = jsonParser.Parse(httpData);
             }
-            catch (System.Net.Http.HttpRequestException)
+            catch (Exception)
             {
                 httpData = new DataTypes.HttpData(-1, 404, STRING_LE404);
+                allListData = jsonParser.Parse(httpData);
             }
 
-            allListData = jsonParser.Parse(httpData);
             dataRefiner.ListDataRefine(allListData);
             dataBinder.DataBind(targetObject, allListData, null);
 

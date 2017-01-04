@@ -35,12 +35,15 @@ namespace AniSched
                 case JsType.List:
                     uri += listUrl;
                     break;
+
                 case JsType.End:
                     uri += endUrl;
                     break;
+
                 case JsType.Capton:
                     uri += captionUrl;
                     break;
+
             }
 
             httpResponse = await httpClient.GetAsync(new Uri(uri + id));

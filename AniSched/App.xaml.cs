@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -7,6 +8,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -40,6 +42,17 @@ namespace AniSched
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            //MainFunction.localSettings.Values.Clear();
+            if (MainFunction.localSettings.Values.Keys.Count < 6)
+            {
+                MainFunction.localSettings.Values["customBackgroundColor"] = "#FFFAFAFA";
+                MainFunction.localSettings.Values["customBaseColor"] = "#FFFE3B72";
+                MainFunction.localSettings.Values["customAccentForgroundColor"] = "#FFFAFAFA";
+                MainFunction.localSettings.Values["customAccentForgroundColor_alt"] = "#FF000000";
+                MainFunction.localSettings.Values["customAccentBackgroundColor"] = "#FFF02F65";
+                MainFunction.localSettings.Values["customAccentBackgroundColor_alt"] = "#FFE6E6E6";
+            }
+
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -47,15 +60,31 @@ namespace AniSched
             }
 #endif
             Frame rootFrame = Window.Current.Content as Frame;
-            
+
+            MainFunction.Painter();
             ApplicationView.PreferredLaunchViewSize = new Size(500, 850);
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(500, 850));
-            MainFunction.Painter();
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
             {
+                try
+                {
+                    Current.Resources["customBackgroundColor"] = new SolidColorBrush(MainFunction.ConvertColor(MainFunction.localSettings.Values["customBackgroundColor"].ToString()));
+                    Current.Resources["customBaseColor"] = new SolidColorBrush(MainFunction.ConvertColor(MainFunction.localSettings.Values["customBaseColor"].ToString()));
+                    Current.Resources["customAccentForgroundColor"] = new SolidColorBrush(MainFunction.ConvertColor(MainFunction.localSettings.Values["customAccentForgroundColor"].ToString()));
+                    Current.Resources["customAccentForgroundColor_alt"] = new SolidColorBrush(MainFunction.ConvertColor(MainFunction.localSettings.Values["customAccentForgroundColor_alt"].ToString()));
+                    Current.Resources["customAccentBackgroundColor"] = new SolidColorBrush(MainFunction.ConvertColor(MainFunction.localSettings.Values["customBaseColor"].ToString(), -15));
+                    Current.Resources["customAccentBackgroundColor_alt"] = new SolidColorBrush(MainFunction.ConvertColor(MainFunction.localSettings.Values["customAccentBackgroundColor_alt"].ToString()));
+
+                }
+                catch (Exception)
+                {
+                    MainFunction.localSettings.Values.Clear();
+
+                }
+
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 

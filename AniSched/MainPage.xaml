@@ -21,7 +21,7 @@
                             <Storyboard>
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                    Storyboard.TargetProperty="Background">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFAFAFA" />
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource customBackgroundColor}" />
                                 </ObjectAnimationUsingKeyFrames>
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                    Storyboard.TargetProperty="BorderThickness">
@@ -29,7 +29,7 @@
                                 </ObjectAnimationUsingKeyFrames>
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                    Storyboard.TargetProperty="Foreground">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFE3B72" />
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource customBaseColor}" />
                                 </ObjectAnimationUsingKeyFrames>
                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
                             </Storyboard>
@@ -38,7 +38,7 @@
                             <Storyboard>
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
                                                    Storyboard.TargetProperty="Background">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFAFAFA" />
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource customBackgroundColor}" />
                                 </ObjectAnimationUsingKeyFrames>
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                    Storyboard.TargetProperty="BorderBrush">
@@ -46,7 +46,7 @@
                                 </ObjectAnimationUsingKeyFrames>
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                    Storyboard.TargetProperty="Foreground">
-                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#FF000000" />
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource customAccentForgroundColor_alt}" />
                                 </ObjectAnimationUsingKeyFrames>
                                 <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
                             </Storyboard>
@@ -82,254 +82,112 @@
             </Grid>
         </ControlTemplate>
     </Page.Resources>
-    <SplitView x:Name="MainSplitView" OpenPaneLength="350" PaneBackground="#FFFE3B72">
+    <SplitView x:Name="MainSplitView" OpenPaneLength="350" PaneBackground="{StaticResource customBaseColor}">
         <SplitView.Pane>
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="9*"/>
-                    <RowDefinition Height="7*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+                <Grid x:Name="SettingView">
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="Assets/Logo.png"/>
+                        <StackPanel Orientation="Vertical" Padding="5,10">
+                            <TextBlock Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="18" Margin="10,0" VerticalAlignment="Center" TextWrapping="WrapWholeWords">
+                                <Run FontSize="18" FontWeight="Bold">Copyright</Run>
+                                <LineBreak/><Run FontSize="16">ⓒ2015~2017 Novang, Table from www.anissia.net</Run>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Padding="5,10">
+                            <TextBlock Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="10,0" VerticalAlignment="Center" TextWrapping="WrapWholeWords">
+                                <Run FontSize="18" FontWeight="Bold">Contributor</Run>
+                                <LineBreak/><Run FontSize="16">애니시아 / 또_탈퇴된코란 / Chocola</Run>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Padding="5,10">
+                            <TextBlock Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="10,0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
+                                <Run FontSize="18" FontWeight="Bold">Link</Run>
+                                <LineBreak/><Run FontSize="16">http://blog.moeru.ga/ (Blog)</Run>
+                                <LineBreak/><Run FontSize="16">https://github.com/qkdxorjs1002 (Github)</Run>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Padding="5,10">
+                            <TextBlock Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="18" Margin="10,10,10,0" VerticalAlignment="Center" TextWrapping="WrapWholeWords">
+                                <Run FontSize="18" FontWeight="Bold">Color Settings</Run>
+                            </TextBlock>
+                            <Grid Background="#26000000" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <RadioButton x:Name="ColorSettings_Pink" Grid.Column="0" Grid.Row="0" Margin="10,5,5,5" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Foreground="{StaticResource customBackgroundColor}" RequestedTheme="Dark" Content="Pink" FontSize="16" Checked="ColorSettings_Checked" Loaded="ColorSettings_Loaded"/>
+                                <RadioButton x:Name="ColorSettings_Purple" Grid.Column="1" Grid.Row="0" Margin="5,5,10,5" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Foreground="{StaticResource customBackgroundColor}" RequestedTheme="Dark" Content="Purple" FontSize="16" Checked="ColorSettings_Checked" Loaded="ColorSettings_Loaded"/>
+                                <RadioButton x:Name="ColorSettings_Blue" Grid.Column="0" Grid.Row="1" Margin="10,5,5,5" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Foreground="{StaticResource customBackgroundColor}" RequestedTheme="Dark" Content="Blue" FontSize="16" Checked="ColorSettings_Checked" Loaded="ColorSettings_Loaded"/>
+                                <RadioButton x:Name="ColorSettings_Cyan" Grid.Column="1" Grid.Row="1" Margin="5,5,10,5" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Foreground="{StaticResource customBackgroundColor}" RequestedTheme="Dark" Content="Cyan" FontSize="16" Checked="ColorSettings_Checked" Loaded="ColorSettings_Loaded"/>
+                                <RadioButton x:Name="ColorSettings_Teal" Grid.Column="0" Grid.Row="2" Margin="10,5,5,5" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Foreground="{StaticResource customBackgroundColor}" RequestedTheme="Dark" Content="Teal" FontSize="16" Checked="ColorSettings_Checked" Loaded="ColorSettings_Loaded"/>
+                                <RadioButton x:Name="ColorSettings_Amber" Grid.Column="1" Grid.Row="2" Margin="5,5,10,5" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Foreground="{StaticResource customBackgroundColor}" RequestedTheme="Dark" Content="Amber" FontSize="16" Checked="ColorSettings_Checked" Loaded="ColorSettings_Loaded"/>
+                                <RadioButton x:Name="ColorSettings_Orange" Grid.Column="0" Grid.Row="3" Margin="10,5,5,5" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Foreground="{StaticResource customBackgroundColor}" RequestedTheme="Dark" Content="Orange" FontSize="16" Checked="ColorSettings_Checked" Loaded="ColorSettings_Loaded"/>
+                                <RadioButton x:Name="ColorSettings_Grey" Grid.Column="1" Grid.Row="3" Margin="5,5,10,5" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Foreground="{StaticResource customBackgroundColor}" RequestedTheme="Dark" Content="Grey" FontSize="16" Checked="ColorSettings_Checked" Loaded="ColorSettings_Loaded"/>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Padding="5" HorizontalAlignment="Right">
+                                <Button x:Name="ResetSettings" Content="초기화" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="14" Template="{StaticResource BtnControlTemplate}" Background="#19FFFFFF" Height="30" Click="ResetSettings_Click"/>
+                            </StackPanel>
+                            <TextBlock x:Name="RestartAlert" Text="앱을 재시작하면 적용됩니다." Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="14" VerticalAlignment="Bottom" Padding="10" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="CaptionView" Visibility="Collapsed">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="9*"/>
+                        <RowDefinition Height="7*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="ExtraButton" Grid.Column="0" Content="&#xEA37;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" Width="50" Height="50" Background="{x:Null}" Padding="0" BorderThickness="0" BorderBrush="{x:Null}" FontSize="24" FontWeight="Bold" Click="ExtraButton_Click" Foreground="#FFFAFAFA" Template="{StaticResource BtnControlTemplate}">
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout x:Name="ExtraMenuFloyout" Placement="Bottom" >
-                                    <MenuFlyoutItem Text="나무위키에서 검색" Click="MenuFlyoutItem_Click"/>
-                                    <MenuFlyoutSeparator/>
-                                    <MenuFlyoutItem Text="네이버에서 검색" Click="MenuFlyoutItem_Click"/>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
-                        </Button>
-                        <TextBlock x:Name="CapListTitle" Grid.Column="1" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="20" VerticalAlignment="Center" Margin="0,0,5,0" TextTrimming="CharacterEllipsis" TextAlignment="Center" Foreground="#FFFAFAFA" />
-                    </Grid>
-                    <Image x:Name="CapListImage" Grid.Row="1" Stretch="UniformToFill" ImageFailed="CapListImage_ImageFailed" HorizontalAlignment="Center"/>
-                    <Grid Grid.Row="1" Height="100" VerticalAlignment="Bottom" Background="#7F000000">
-                        <Ellipse x:Name="CapListStatus" Width="15" Height="15" Margin="10,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" />
-                        <StackPanel VerticalAlignment="Center" Margin="20,0">
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <TextBlock Text="장르:" Foreground="#FFFAFAFA" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="0,0,5,0"/>
-                                <TextBlock x:Name="CapListGenre" Foreground="#FFFAFAFA" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="ExtraButton" Grid.Column="0" Content="&#xEA37;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" Width="50" Height="50" Background="{x:Null}" Padding="0" BorderThickness="0" BorderBrush="{x:Null}" FontSize="24" FontWeight="Bold" Click="ExtraButton_Click" Foreground="{StaticResource customBackgroundColor}" Template="{StaticResource BtnControlTemplate}">
+                                <FlyoutBase.AttachedFlyout>
+                                    <MenuFlyout x:Name="ExtraMenuFloyout" Placement="Bottom" >
+                                        <MenuFlyoutItem x:Name="CaptionIDText" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" IsEnabled="False"/>
+                                        <MenuFlyoutSeparator/>
+                                        <MenuFlyoutItem Text="나무위키에서 검색" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Click="MenuFlyoutItem_Click"/>
+                                        <MenuFlyoutItem Text="네이버에서 검색" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Click="MenuFlyoutItem_Click" ToolTipService.ToolTip="tip"/>
+                                    </MenuFlyout>
+                                </FlyoutBase.AttachedFlyout>
+                            </Button>
+                            <Border BorderBrush="{StaticResource customBackgroundColor}" BorderThickness="0.5,0,0,0" Width="1" HorizontalAlignment="Right" Margin="0,10"/>
+                            <TextBlock x:Name="CapListTitle" Grid.Column="1" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="20" VerticalAlignment="Center" Margin="10,0,10,0" TextTrimming="CharacterEllipsis" TextAlignment="Center" Foreground="{StaticResource customBackgroundColor}" />
+                        </Grid>
+                        <Image x:Name="CapListImage" Grid.Row="1" Stretch="UniformToFill" ImageFailed="CapListImage_ImageFailed" HorizontalAlignment="Center"/>
+                        <Grid Grid.Row="1" Height="100" VerticalAlignment="Bottom" Background="#7F000000">
+                            <Ellipse x:Name="CapListStatus" Width="15" Height="15" Margin="10,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                            <StackPanel VerticalAlignment="Center" Margin="20,0">
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="장르:" Foreground="{StaticResource customBackgroundColor}" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="0,0,5,0"/>
+                                    <TextBlock x:Name="CapListGenre" Foreground="{StaticResource customBackgroundColor}" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="날짜:" Foreground="{StaticResource customBackgroundColor}" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="0,0,5,0"/>
+                                    <TextBlock x:Name="CapListStart" Foreground="{StaticResource customBackgroundColor}" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium"/>
+                                    <TextBlock Text="~" Foreground="{StaticResource customBackgroundColor}" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="5,0"/>
+                                    <TextBlock x:Name="CapListEnd" Foreground="{StaticResource customBackgroundColor}" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <TextBlock Text="홈페이지:" Foreground="{StaticResource customBackgroundColor}" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="0,0,5,0"/>
+                                    <TextBlock x:Name="CapListLink" Foreground="{StaticResource customBackgroundColor}" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Tapped="CapListLink_Tapped"/>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <TextBlock Text="날짜:" Foreground="#FFFAFAFA" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="0,0,5,0"/>
-                                <TextBlock x:Name="CapListStart" Foreground="#FFFAFAFA" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium"/>
-                                <TextBlock Text="~" Foreground="#FFFAFAFA" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="5,0"/>
-                                <TextBlock x:Name="CapListEnd" Foreground="#FFFAFAFA" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <TextBlock Text="홈페이지:" Foreground="#FFFAFAFA" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="0,0,5,0"/>
-                                <TextBlock x:Name="CapListLink" CanDrag="True" Foreground="#FFFAFAFA" FontSize="14" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </Grid>
-                <ListView x:Name="CapListView" Grid.Row="1" Margin="0" IsSwipeEnabled="False" IsItemClickEnabled="True" SelectionMode="None" ItemClick="CapListView_ItemClick">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ListViewItem">
-                                        <ListViewItemPresenter
-          ContentTransitions="{TemplateBinding ContentTransitions}"
-          SelectionCheckMarkVisualEnabled="True"
-          Foreground="#FFFAFAFA"
-          CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
-          CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
-          DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
-          DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
-          FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
-          FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
-          PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-          PointerOverBackground="#FFFAFAFA"
-          PointerOverForeground="#FF000000"
-          SelectedBackground="#FFFE3B72"
-          SelectedForeground="#FFFAFAFA"
-          SelectedPointerOverBackground="#FFFAFAFA"
-          PressedBackground="#FFE6E6E6"
-          SelectedPressedBackground="#FFCBCBCB"
-          DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-          DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-          ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-          ContentMargin="{TemplateBinding Padding}"
-          CheckMode="Inline"/>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid Padding="5,10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="3*"/>
-                                        <RowDefinition Height="2*"/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding s}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="16" Padding="0,0,0,2"/>
-                                    <Grid Grid.Row="1" Padding="0,2,0,0">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Padding="5,0">
-                                            <TextBlock Text="{Binding d}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
-                                            <TextBlock Text="-" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12" Padding="5,0"/>
-                                            <TextBlock Text="{Binding n}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-        </SplitView.Pane>
-        <SplitView.Content>
-            <SplitView x:Name="TabSplitView" DisplayMode="CompactOverlay" CompactPaneLength="50" OpenPaneLength="350" PaneBackground="#FFFE3B72">
-                <SplitView.Pane>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <StackPanel Orientation="Horizontal">
-                                <Button x:Name="SearchButton" FontFamily="Segoe MDL2 Assets" Content="&#xE094;" Width="50" Height="50" Background="Transparent" Foreground="#FFFAFAFA" BorderThickness="0" Click="SearchButton_Click" FontWeight="Bold" FontSize="16" Template="{StaticResource BtnControlTemplate}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Grid x:Name="SunIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA" />
-                                    <Button x:Name="SunButton" Content="日" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                                </Grid>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Grid x:Name="MonIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
-                                    <Button x:Name="MonButton" Content="月" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                                </Grid>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Grid x:Name="TueIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
-                                    <Button x:Name="TueButton" Content="火" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                                </Grid>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Grid x:Name="WedIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
-                                    <Button x:Name="WedButton" Content="水" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                                </Grid>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Grid x:Name="ThuIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
-                                    <Button x:Name="ThuButton" Content="木" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                                </Grid>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Grid x:Name="FriIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
-                                    <Button x:Name="FriButton" Content="金" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                                </Grid>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Grid x:Name="SatIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
-                                    <Button x:Name="SatButton" Content="土" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                                </Grid>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Grid x:Name="OvaIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
-                                    <Button x:Name="OvaButton" Content="外" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                                </Grid>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <Grid x:Name="NewIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="#FFFAFAFA"/>
-                                    <Button x:Name="NewButton" Content="新" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="#FFFAFAFA" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
-                                </Grid>
-                            </StackPanel>
-                        </StackPanel>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <TextBox x:Name="SearchTextBox" Grid.Row="0" Margin="10,9" Background="#FFFAFAFA" SelectionHighlightColor="#FFFE3B72" InputScope="Search" TextChanged="SearchTextBox_TextChanged" />
-                            <ListView x:Name="SearchListView" Grid.Row="1" Margin="0" IsSwipeEnabled="False" Foreground="#FFFAFAFA" ItemClick="AniListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ListViewItem">
-                                                    <ListViewItemPresenter
-          ContentTransitions="{TemplateBinding ContentTransitions}"
-          SelectionCheckMarkVisualEnabled="True"
-          Foreground="#FFFAFAFA"
-          CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
-          CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
-          DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
-          DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
-          FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
-          FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
-          PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-          PointerOverBackground="#FFFAFAFA"
-          PointerOverForeground="#FF000000"
-          SelectedBackground="#FFFE3B72"
-          SelectedForeground="#FFFAFAFA"
-          SelectedPointerOverBackground="#FFFAFAFA"
-          PressedBackground="#FFE6E6E6"
-          SelectedPressedBackground="#FFCBCBCB"
-          DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-          DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-          ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-          ContentMargin="{TemplateBinding Padding}"
-          CheckMode="Inline"/>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Grid Padding="5,10">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="3*"/>
-                                                    <RowDefinition Height="2*"/>
-                                                </Grid.RowDefinitions>
-                                                <TextBlock Grid.Row="0" Text="{Binding s}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="16" Padding="0,0,0,2"/>
-                                                <Grid Grid.Row="1" Padding="0,2,0,0">
-                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Padding="5,0">
-                                                        <TextBlock Text="{Binding t}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
-                                                        <TextBlock Text="-" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12" Padding="5,0"/>
-                                                        <TextBlock Text="{Binding g}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
-                                                    </StackPanel>
-                                                </Grid>
-                                            </Grid>
-                                            <Ellipse Fill="{Binding a}" Width="10" Height="10" Margin="10,0" HorizontalAlignment="Right" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
                         </Grid>
                     </Grid>
-                </SplitView.Pane>
-                <SplitView.Content>
-                    <ListView x:Name="AniListView" Grid.Column="1" Margin="0" IsSwipeEnabled="False" Background="#FFFAFAFA" ItemClick="AniListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                    <ListView x:Name="CapListView" Grid.Row="1" Margin="0" IsSwipeEnabled="False" IsItemClickEnabled="True" SelectionMode="None" ItemClick="CapListView_ItemClick">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -340,6 +198,7 @@
                                             <ListViewItemPresenter
           ContentTransitions="{TemplateBinding ContentTransitions}"
           SelectionCheckMarkVisualEnabled="True"
+          Foreground="{StaticResource customBackgroundColor}"
           CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
           CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
           DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
@@ -347,13 +206,13 @@
           FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
           FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
           PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-          PointerOverBackground="#FFFE3B72"
-          PointerOverForeground="#FFFAFAFA"
-          SelectedBackground="#FFFAFAFA"
-          SelectedForeground="#FF000000"
-          SelectedPointerOverBackground="#FFFE3B72"
-          PressedBackground="#FFF02F65"
-          SelectedPressedBackground="#FFF02F65"
+          PointerOverBackground="{StaticResource customBackgroundColor}"
+          PointerOverForeground="{StaticResource customAccentForgroundColor_alt}"
+          SelectedBackground="{StaticResource customBaseColor}"
+          SelectedForeground="{StaticResource customBackgroundColor}"
+          SelectedPointerOverBackground="{StaticResource customBackgroundColor}"
+          PressedBackground="{StaticResource customAccentBackgroundColor_alt}"
+          SelectedPressedBackground="#FFCBCBCB"
           DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
           DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
           ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
@@ -375,6 +234,221 @@
                                             <RowDefinition Height="2*"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Text="{Binding s}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="16" Padding="0,0,0,2"/>
+                                        <Grid Grid.Row="1" Padding="0,2,0,0">
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Padding="5,0">
+                                                <TextBlock Text="{Binding d}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
+                                                <TextBlock Text="-" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12" Padding="5,0"/>
+                                                <TextBlock Text="{Binding n}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Grid>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <SplitView x:Name="TabSplitView" DisplayMode="CompactOverlay" CompactPaneLength="50" OpenPaneLength="350" PaneBackground="{StaticResource customBaseColor}">
+                <SplitView.Pane>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="SearchButton" FontFamily="Segoe MDL2 Assets" Content="&#xE094;" Width="50" Height="50" Background="Transparent" Foreground="{StaticResource customBackgroundColor}" BorderThickness="0" Click="SearchButton_Click" FontWeight="Bold" FontSize="16" Template="{StaticResource BtnControlTemplate}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid x:Name="SunIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="{StaticResource customBackgroundColor}" />
+                                    <Button x:Name="SunButton" Content="日" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid x:Name="MonIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="{StaticResource customBackgroundColor}"/>
+                                    <Button x:Name="MonButton" Content="月" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid x:Name="TueIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="{StaticResource customBackgroundColor}"/>
+                                    <Button x:Name="TueButton" Content="火" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid x:Name="WedIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="{StaticResource customBackgroundColor}"/>
+                                    <Button x:Name="WedButton" Content="水" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid x:Name="ThuIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="{StaticResource customBackgroundColor}"/>
+                                    <Button x:Name="ThuButton" Content="木" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid x:Name="FriIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="{StaticResource customBackgroundColor}"/>
+                                    <Button x:Name="FriButton" Content="金" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid x:Name="SatIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="{StaticResource customBackgroundColor}"/>
+                                    <Button x:Name="SatButton" Content="土" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid x:Name="OvaIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="{StaticResource customBackgroundColor}"/>
+                                    <Button x:Name="OvaButton" Content="外" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Grid x:Name="NewIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="4" Height="20" Background="{StaticResource customBackgroundColor}"/>
+                                    <Button x:Name="NewButton" Content="新" Width="50" Height="50" Background="Transparent" BorderThickness="0" Foreground="{StaticResource customBackgroundColor}" Click="DayButton_Click" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="SettingButton" FontFamily="Segoe MDL2 Assets" Content="&#xE115;" Width="50" Height="50" Background="Transparent" Foreground="{StaticResource customBackgroundColor}" BorderThickness="0" FontWeight="Bold" FontSize="18" Template="{StaticResource BtnControlTemplate}" Click="SettingButton_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="SearchTextBox" Grid.Column="0" Margin="10,9,15,9" Background="{StaticResource customBackgroundColor}" SelectionHighlightColor="{StaticResource customBaseColor}" InputScope="Search" TextChanged="SearchTextBox_TextChanged" BorderThickness="0" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" />
+                                <Border BorderBrush="{StaticResource customBackgroundColor}" BorderThickness="0.5,0,0,0" Width="1" HorizontalAlignment="Right" Margin="0,10"/>
+                                <Button x:Name="SearchExtraButton" Grid.Column="1" Content="&#xEA37;" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" Width="50" Height="50" Background="{x:Null}" Padding="0" BorderThickness="0" BorderBrush="{x:Null}" FontSize="24" FontWeight="Bold" Foreground="{StaticResource customBackgroundColor}" Template="{StaticResource BtnControlTemplate}" Click="SearchExtraButton_Click">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout x:Name="SearchExtraMenuFloyout" Placement="Bottom" >
+                                            <ToggleMenuFlyoutItem x:Name="IsEnd_CheckBox" Text="종영 애니" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Click="ToggleMenuFlyoutItem_Click"/>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </Button>
+                            </Grid>
+                            <ListView x:Name="SearchListView" Grid.Row="1" Margin="0" IsSwipeEnabled="False" Foreground="{StaticResource customBackgroundColor}" ItemClick="AniListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <ListViewItemPresenter
+          ContentTransitions="{TemplateBinding ContentTransitions}"
+          SelectionCheckMarkVisualEnabled="True"
+          Foreground="{StaticResource customBackgroundColor}"
+          CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+          CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+          DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+          DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+          FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+          FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+          PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+          PointerOverBackground="{StaticResource customBackgroundColor}"
+          PointerOverForeground="{StaticResource customAccentForgroundColor_alt}"
+          SelectedBackground="{StaticResource customBaseColor}"
+          SelectedForeground="{StaticResource customBackgroundColor}"
+          SelectedPointerOverBackground="{StaticResource customBackgroundColor}"
+          PressedBackground="{StaticResource customAccentBackgroundColor_alt}"
+          SelectedPressedBackground="#FFCBCBCB"
+          DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+          DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+          ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+          ContentMargin="{TemplateBinding Padding}"
+          CheckMode="Inline"/>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid Padding="5,10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="3*"/>
+                                                    <RowDefinition Height="2*"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Grid.Row="0" Text="{Binding s}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="16" Padding="0,0,10,2" TextTrimming="CharacterEllipsis"/>
+                                                <Grid Grid.Row="1" Padding="0,2,0,0">
+                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Padding="5,0">
+                                                        <TextBlock Text="{Binding t}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
+                                                        <TextBlock Text="-" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12" Padding="5,0"/>
+                                                        <TextBlock Text="{Binding g}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Grid>
+                                            <Ellipse Fill="{Binding a}" Width="10" Height="10" Margin="10,0" HorizontalAlignment="Right" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </Grid>
+                </SplitView.Pane>
+                <SplitView.Content>
+                    <ListView x:Name="AniListView" Grid.Column="1" Margin="0" IsSwipeEnabled="False" Background="{StaticResource customBackgroundColor}" ItemClick="AniListView_ItemClick" IsItemClickEnabled="True" SelectionMode="None">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <ListViewItemPresenter
+          ContentTransitions="{TemplateBinding ContentTransitions}"
+          SelectionCheckMarkVisualEnabled="True"
+          CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+          CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+          DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+          DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+          FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+          FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+          PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+          PointerOverBackground="{StaticResource customBaseColor}"
+          PointerOverForeground="{StaticResource customBackgroundColor}"
+          SelectedBackground="{StaticResource customBackgroundColor}"
+          SelectedForeground="{StaticResource customAccentForgroundColor_alt}"
+          SelectedPointerOverBackground="{StaticResource customBaseColor}"
+          PressedBackground="{StaticResource customAccentBackgroundColor}"
+          SelectedPressedBackground="{StaticResource customAccentBackgroundColor}"
+          DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+          DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+          ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+          ContentMargin="{TemplateBinding Padding}"
+          CheckMode="Inline"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid Padding="5,10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="3*"/>
+                                            <RowDefinition Height="2*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding s}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="16" Padding="0,0,10,2" TextTrimming="CharacterEllipsis"/>
                                         <Grid Grid.Row="1" Padding="0,2,0,0">
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Padding="5,0">
                                                 <TextBlock Text="{Binding t}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>

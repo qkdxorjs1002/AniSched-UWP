@@ -23,6 +23,7 @@ namespace AniSched
                 this.dataCode = 0;
                 this.statusCode = 0;
                 this.jsonData = null;
+
             }
 
             public HttpData(int dataCode, int statusCode, string jsonData)

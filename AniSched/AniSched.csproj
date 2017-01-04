@@ -94,6 +94,7 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\Logo.png" />
     <Content Include="Assets\NotoSansCJKkr-Medium.otf" />
     <None Include="AniSched_StoreKey.pfx" />
     <None Include="project.json" />
@@ -116,7 +117,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="AniSched_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-100.png" />

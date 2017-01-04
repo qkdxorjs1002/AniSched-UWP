@@ -40,6 +40,7 @@ namespace AniSched
                 if (targetStr != null && tmp.s.Contains(targetStr) == false)
                 {
                     continue;
+
                 }
 
                 targetList.Add(new DataTypes.ListData
