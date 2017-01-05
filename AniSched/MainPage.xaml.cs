@@ -359,17 +359,13 @@ namespace AniSched
 
         public static Color ConvertColor(string hexColor, sbyte bright)
         {
-            hexColor = hexColor.Replace("#", string.Empty);
-            byte a = (byte)(Convert.ToUInt32(hexColor.Substring(0, 2), 16));
-            byte r = (byte)(Convert.ToUInt32(hexColor.Substring(2, 2), 16));
-            byte g = (byte)(Convert.ToUInt32(hexColor.Substring(4, 2), 16));
-            byte b = (byte)(Convert.ToUInt32(hexColor.Substring(6, 2), 16));
+            Color targetColor = ConvertColor(hexColor);
             
-            r = (byte)(r + bright > 255 ? 255 : (r + bright < 0 ? 0 : r + bright));
-            g = (byte)(g + bright > 255 ? 255 : (g + bright < 0 ? 0 : g + bright));
-            b = (byte)(b + bright > 255 ? 255 : (b + bright < 0 ? 0 : b + bright));
+            targetColor.R = (byte)(targetColor.R + bright > 255 ? 255 : (targetColor.R + bright < 0 ? 0 : targetColor.R + bright));
+            targetColor.G = (byte)(targetColor.G + bright > 255 ? 255 : (targetColor.G + bright < 0 ? 0 : targetColor.G + bright));
+            targetColor.B = (byte)(targetColor.B + bright > 255 ? 255 : (targetColor.B + bright < 0 ? 0 : targetColor.B + bright));
 
-            return Color.FromArgb(a, r, g, b);
+            return targetColor;
         }
 
         public static String RandomImage()
