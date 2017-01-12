@@ -35,7 +35,7 @@ namespace AniSched
                 HardwareButtons.BackPressed += OnHardwareButtonsBackPressed;
             }
 
-            MainFunction.gridList = new Grid[] { SunIndicator, MonIndicator, TueIndicator, WedIndicator, ThuIndicator, FriIndicator, SatIndicator, OvaIndicator, NewIndicator };
+            MainFunction.gridList = new Grid[] { SunIndicator, MonIndicator, TueIndicator, WedIndicator, ThuIndicator, FriIndicator, SatIndicator, OvaIndicator, NewIndicator, FavIndicator };
 
             MainFunction.LoadList(AniListView, JsType.List
                 , (Days)Enum.Parse(typeof(Days), DateTime.Now.DayOfWeek.ToString().Remove(3)));
@@ -56,7 +56,6 @@ namespace AniSched
             else
             {
                 App.Current.Exit();
-
             }
 
         }
@@ -78,7 +77,7 @@ namespace AniSched
                         break;
 
                 }
-                MainFunction.LoadList(SearchListView, targetType);
+                MainFunction.LoadList(SearchListView, targetType, null);
 
             }
 
@@ -94,10 +93,22 @@ namespace AniSched
 
         }
 
+        private void FavButton_Click(object sender, RoutedEventArgs e)
+        {
+            string callerObjectName;
+            Button callerObject = sender as Button;
+
+            callerObjectName = callerObject.Name.Remove(3);
+
+            MainFunction.InitIndicator(callerObjectName);
+            MainFunction.LoadList(AniListView, JsType.List, "%1002&FAVLIST%1002&");
+
+        }
+
         private void DayButton_Click(object sender, RoutedEventArgs e)
         {
             Days targetDay;
-            String callerObjectName;
+            string callerObjectName;
             Button callerObject = sender as Button;
 
             TabSplitView.IsPaneOpen = false;
@@ -113,6 +124,9 @@ namespace AniSched
         private void AniListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             DataTypes.ListData callerObject = e.ClickedItem as DataTypes.ListData;
+
+            int toDay = Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd"));
+            int endDay = Convert.ToInt32(callerObject.ed.Replace("/", ""));
 
             if (callerObject.iis == 404)
             {
@@ -131,6 +145,10 @@ namespace AniSched
             CapListEnd.Text = callerObject.ed;
             CapListLink.Text = callerObject.l;
             CapListStatus.Fill = new SolidColorBrush(MainFunction.ConvertColor(callerObject.a));
+
+            FavToggleButton.IsEnabled = toDay > endDay && endDay != 0 ? false : true;
+            FavToggleButton.IsChecked = MainFunction.favList.Contains(CaptionIDText.Text);
+
             MainSplitView.IsPaneOpen = true;
 
         }
@@ -139,7 +157,7 @@ namespace AniSched
         {
             DataTypes.ListData callerObject = e.ClickedItem as DataTypes.ListData;
 
-            if (callerObject.a != "http://")
+            if (callerObject.a != "http://" && callerObject.a != null)
             {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri(callerObject.a));
             }
@@ -173,11 +191,11 @@ namespace AniSched
 
             if (callerObject.IsChecked == true)
             {
-                MainFunction.LoadList(SearchListView, JsType.End);
+                MainFunction.LoadList(SearchListView, JsType.End, null);
             }
-            else if (callerObject.IsChecked == false)
+            else
             {
-                MainFunction.LoadList(SearchListView, JsType.List);
+                MainFunction.LoadList(SearchListView, JsType.List, null);
             }
 
         }
@@ -206,13 +224,13 @@ namespace AniSched
         private void ResetSettings_Click(object sender, RoutedEventArgs e)
         {
             ColorSettings_Pink.IsChecked = true;
-
+            MainFunction.favList.Clear();
         }
 
         private void ColorSettings_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton callerObject = sender as RadioButton;
-            String targetBsColor;
+            string targetBsColor;
 
             switch (callerObject.Name.Remove(0, 14))
             {
@@ -287,13 +305,29 @@ namespace AniSched
             }
 
         }
+        
+        private void FavToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleButton callerObject = sender as ToggleButton;
+            string targetId = CaptionIDText.Text;
+
+            if (MainFunction.favList.Contains(targetId))
+            {
+                MainFunction.favList.Remove(targetId);
+            }
+            else
+            {
+                MainFunction.favList.Add(targetId);
+            }
+            
+        }
 
     }
 
     public static class MainFunction
     {
-        const String STRING_LE404 = "[{\"s\":\"오류\",\"t\":\"원인\",\"g\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
-        const String STRING_CE404 = "[{\"s\":\"오류\",\"d\":\"원인\",\"n\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
+        const string STRING_LE404 = "[{\"s\":\"오류\",\"t\":\"원인\",\"g\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
+        const string STRING_CE404 = "[{\"s\":\"오류\",\"d\":\"원인\",\"n\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
 
         public static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
         public static StorageFolder localFolder = ApplicationData.Current.LocalFolder;
@@ -303,6 +337,7 @@ namespace AniSched
         static DataTypes.HttpData httpData;
         public static Grid[] gridList;
         public static string[] settingList;
+        public static List<string> favList = new List<string>();
 
         static JsonRequester jsonRequester = new JsonRequester("http://www.anissia.net/anitime/", "list?w=", "end?p=", "cap?i=");
         static JsonParser jsonParser = new JsonParser();
@@ -376,7 +411,7 @@ namespace AniSched
             return ("rand" + targetNum + ".png");
         }
 
-        public static void InitIndicator(String targetDay)
+        public static void InitIndicator(string targetDay)
         {
             foreach (Grid ld in gridList)
             {
@@ -421,7 +456,7 @@ namespace AniSched
 
         }
 
-        public async static void LoadList(ListView targetObject, JsType targetJsType)
+        public async static void LoadList(ListView targetObject, JsType targetJsType, string targetStr)
         {
             DataTypes.HttpData tmpData;
             httpData = new DataTypes.HttpData();
@@ -443,11 +478,11 @@ namespace AniSched
             }
 
             dataRefiner.ListDataRefine(allListData);
-            dataBinder.DataBind(targetObject, allListData, null);
+            dataBinder.DataBind(targetObject, allListData, targetStr);
 
         }
 
-        public static void SearchList(ListView targetObject, JsType targetJsType, String targetStr)
+        public static void SearchList(ListView targetObject, JsType targetJsType, string targetStr)
         {
             dataBinder.DataBind(targetObject, allListData, targetStr);
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AniSched
 {
     public enum JsType { List, End, Capton };
-    public enum Days { Sun, Mon, Tue, Wed, Thu, Fri, Sat, Ova, New };
+    public enum Days { Sun, Mon, Tue, Wed, Thu, Fri, Sat, Ova, New, Fav };
 
     class DataTypes
     {

@@ -77,6 +77,10 @@ namespace AniSched
                     Current.Resources["customAccentForgroundColor_alt"] = new SolidColorBrush(MainFunction.ConvertColor(MainFunction.localSettings.Values["customAccentForgroundColor_alt"].ToString()));
                     Current.Resources["customAccentBackgroundColor"] = new SolidColorBrush(MainFunction.ConvertColor(MainFunction.localSettings.Values["customBaseColor"].ToString(), -15));
                     Current.Resources["customAccentBackgroundColor_alt"] = new SolidColorBrush(MainFunction.ConvertColor(MainFunction.localSettings.Values["customAccentBackgroundColor_alt"].ToString()));
+                    if (MainFunction.localSettings.Values["favoriteList"] != null && MainFunction.localSettings.Values.Keys.Contains("favoriteList") != false)
+                    {
+                        MainFunction.favList = ((string[])MainFunction.localSettings.Values["favoriteList"]).ToList();
+                    }
 
                 }
                 catch (Exception)
@@ -132,9 +136,19 @@ namespace AniSched
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            if (MainFunction.favList.Count == 0)
+            {
+                MainFunction.localSettings.Values.Remove("favoriteList");
+            }
+            else
+            {
+                MainFunction.localSettings.Values["favoriteList"] = MainFunction.favList.ToArray();
+            }
+
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+        
     }
 }

@@ -21,58 +21,100 @@ namespace AniSched
 
             }
 
-            AddList(targetObject, targetData, listToBind, null);
+            foreach (DataTypes.ListData tmp in targetData)
+            {
+                AddList(tmp, listToBind);
+            }
 
+            targetObject.ItemsSource = listToBind;
         }
 
         public void DataBind(ListView targetObject, DataTypes.ListData[] targetData, String targetStr)
         {
             List<DataTypes.ListData> listToBind = new List<DataTypes.ListData>();
 
-            AddList(targetObject, targetData, listToBind, targetStr);
-
-        }
-
-        void AddList(ListView targetObject, DataTypes.ListData[] targetData, List<DataTypes.ListData> targetList, String targetStr)
-        {
-            foreach (DataTypes.ListData tmp in targetData)
+            if (targetStr == null)
             {
-                if (targetStr != null && tmp.s.Contains(targetStr) == false)
+                foreach (DataTypes.ListData tmp in targetData)
                 {
-                    continue;
+                    AddList(tmp, listToBind);
+                }
+
+                targetObject.ItemsSource = listToBind;
+            }
+            else if (targetStr == "%1002&FAVLIST%1002&")
+            {
+                List<string> idList = new List<string>();
+
+                foreach (DataTypes.ListData tmp in targetData)
+                {
+                    byte isAdded = 0;
+
+                    foreach (string targetId in MainFunction.favList)
+                    {
+                        if (tmp.i.ToString() == targetId)
+                        {
+                            isAdded = 1;
+                        }
+
+                    }
+                    
+                    if (isAdded != 0)
+                    {
+                        idList.Add(tmp.i.ToString());
+                        AddList(tmp, listToBind);
+                    }
 
                 }
 
-                targetList.Add(new DataTypes.ListData
+                targetObject.ItemsSource = listToBind;
+                MainFunction.favList = idList;
+            }
+            else
+            {
+                foreach (DataTypes.ListData tmp in targetData)
                 {
-                    iid = tmp.iid
-                    ,
-                    iis = tmp.iis
-                    ,
-                    i = tmp.i
-                    ,
-                    s = tmp.s
-                    ,
-                    t = ((tmp.iid == 7 || tmp.iid == 8) ? tmp.sd : tmp.t)
-                    ,
-                    g = tmp.g
-                    ,
-                    l = tmp.l
-                    ,
-                    a = tmp.a
-                    ,
-                    sd = tmp.sd
-                    ,
-                    ed = tmp.ed
-                    ,
-                    d = tmp.d
-                    ,
-                    n = tmp.n
-                });
+                    if (tmp.s.Contains(targetStr) == false)
+                    {
+                        continue;
+                    }
 
+                    AddList(tmp, listToBind);
+                }
+
+                targetObject.ItemsSource = listToBind;
             }
 
-            targetObject.ItemsSource = targetList;
+        }
+
+        void AddList(DataTypes.ListData tmp, List<DataTypes.ListData> targetList)
+        {
+            targetList.Add(new DataTypes.ListData
+            {
+                iid = tmp.iid
+                ,
+                iis = tmp.iis
+                ,
+                i = tmp.i
+                ,
+                s = tmp.s
+                ,
+                t = ((tmp.iid == 7 || tmp.iid == 8) ? tmp.sd : tmp.t)
+                ,
+                g = tmp.g
+                ,
+                l = tmp.l
+                ,
+                a = tmp.a
+                ,
+                sd = tmp.sd
+                ,
+                ed = tmp.ed
+                ,
+                d = tmp.d
+                ,
+                n = tmp.n
+            });
 
         }
 
