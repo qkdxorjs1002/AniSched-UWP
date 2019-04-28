@@ -26,7 +26,6 @@ namespace AniSched
                     ld.s = ld.s.Replace("&amp;", "&");
                     ld.t = ld.t.Insert(2, ":");
                     ld.l = ld.l.Trim();
-                    ld.l = ld.l.Insert(0, "http://");
                     ld.a = (ld.a == "true" ? (toDay.CompareTo(endDay) > 0 && endDay != 0 ? "#FF455A64" : (toDay.CompareTo(startDay) < 0 && startDay != 0 ? "#FF00B0FF" : "#FF00E676")) : "#FFFF1744");
                     ld.sd = ld.sd.Insert(4, "/");
                     ld.sd = ld.sd.Insert(7, "/");
@@ -58,7 +57,7 @@ namespace AniSched
                     ld.d = ld.d.Insert(5, "-");
                     ld.d = ld.d.Insert(8, ":");
                     ld.d = ld.d.Insert(11, ":");
-                    ld.a = (ld.a.Trim()).Insert(0, "http://");
+                    ld.a = ld.a.Trim();
                     ld.n = (ld.n == null ? "제작자 정보 없음" : ld.n);
 
                 } catch { }

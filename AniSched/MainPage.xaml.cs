@@ -4,12 +4,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.Toolkit.Uwp.Notifications;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
 using Windows.Phone.UI.Input;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -25,6 +27,8 @@ namespace AniSched
 
     public sealed partial class MainPage : Page
     {
+        //const string URL_IMGSOURCE = "http://anisched.moeru.me/";
+        const string URL_IMGSOURCE = "http://test.istpikworld.net/~anisched/";
 
         public MainPage()
         {
@@ -137,7 +141,7 @@ namespace AniSched
             SettingView.Visibility = Visibility.Collapsed;
 
             MainFunction.LoadList(CapListView, callerObject.i);
-            CapListImage.Source = new BitmapImage(new Uri("http://anisched.moeru.ga/" + callerObject.i + ".jpg", UriKind.Absolute));
+            CapListImage.Source = new BitmapImage(new Uri(URL_IMGSOURCE + callerObject.i + ".jpg", UriKind.Absolute));
             CaptionIDText.Text = callerObject.i.ToString();
             CapListTitle.Text = callerObject.s;
             CapListGenre.Text = callerObject.g;
@@ -202,7 +206,7 @@ namespace AniSched
 
         private void CapListImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            CapListImage.Source = new BitmapImage(new Uri("http://anisched.moeru.ga/" + MainFunction.RandomImage(), UriKind.Absolute));
+            CapListImage.Source = new BitmapImage(new Uri(URL_IMGSOURCE + MainFunction.RandomImage() + ".png", UriKind.Absolute));
 
         }
 
@@ -321,7 +325,6 @@ namespace AniSched
             }
             
         }
-
     }
 
     public static class MainFunction
@@ -408,7 +411,7 @@ namespace AniSched
             Random rand = new Random();
             int targetNum = rand.Next() % 50;
 
-            return ("rand" + targetNum + ".png");
+            return ("rand" + targetNum);
         }
 
         public static void InitIndicator(string targetDay)

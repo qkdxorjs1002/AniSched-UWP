@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>AniSched_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>AE2448ABFF776EB3FE78913C9B22C452CDE85C4B</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>4A280B609544983CE86E6F06896D07C66426822A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
@@ -97,6 +97,7 @@
     <Content Include="Assets\Logo.png" />
     <Content Include="Assets\NotoSansCJKkr-Medium.otf" />
     <None Include="AniSched_StoreKey.pfx" />
+    <None Include="AniSched_TemporaryKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

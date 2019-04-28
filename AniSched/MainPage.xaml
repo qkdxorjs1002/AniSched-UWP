@@ -5,7 +5,7 @@
     xmlns:local="using:AniSched"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Width="Auto" Height="Auto">
+    mc:Ignorable="d" Width="Auto" Height="Auto" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium">
 
     <Page.Resources>
         <ControlTemplate x:Key="BtnControlTemplate" TargetType="Button">
@@ -91,13 +91,13 @@
                         <StackPanel Orientation="Vertical" Padding="5,10">
                             <TextBlock Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="18" Margin="10,0" VerticalAlignment="Center" TextWrapping="WrapWholeWords">
                                 <Run FontSize="18" FontWeight="Bold">Copyright</Run>
-                                <LineBreak/><Run FontSize="16">ⓒ2015~2017 Novang, Table from www.anissia.net</Run>
+                                <LineBreak/><Run FontSize="16">ⓒ2015~2018 Novang, Table from www.anissia.net</Run>
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Padding="5,10">
                             <TextBlock Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="10,0" VerticalAlignment="Center" TextWrapping="WrapWholeWords">
                                 <Run FontSize="18" FontWeight="Bold">Contributor</Run>
-                                <LineBreak/><Run FontSize="16">애니시아 / 또_탈퇴된코란 / Chocola</Run>
+                                <LineBreak/><Run FontSize="16">애니시아 / 또_탈퇴된코란 / Chocola / iStpik</Run>
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Padding="5,10">
@@ -393,7 +393,7 @@
                                                     <RowDefinition Height="2*"/>
                                                 </Grid.RowDefinitions>
                                                 <TextBlock Grid.Row="0" Text="{Binding s}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="16" Padding="0,0,10,2" TextTrimming="CharacterEllipsis"/>
-                                                <Grid Grid.Row="1" Padding="0,2,0,0">
+                                                <Grid Grid.Row="1" Padding="0,2,0,0" Opacity="0.65">
                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Padding="5,0">
                                                         <TextBlock Text="{Binding t}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
                                                         <TextBlock Text="-" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12" Padding="5,0"/>
@@ -456,7 +456,7 @@
                                             <RowDefinition Height="2*"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Text="{Binding s}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="16" Padding="0,0,10,2" TextTrimming="CharacterEllipsis"/>
-                                        <Grid Grid.Row="1" Padding="0,2,0,0">
+                                        <Grid Grid.Row="1" Padding="0,2,0,0" Opacity="0.65">
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Padding="5,0">
                                                 <TextBlock Text="{Binding t}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12"/>
                                                 <TextBlock Text="-" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="12" Padding="5,0"/>
