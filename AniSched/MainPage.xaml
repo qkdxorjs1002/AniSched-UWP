@@ -91,7 +91,7 @@
                         <StackPanel Orientation="Vertical" Padding="5,10">
                             <TextBlock Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" FontSize="18" Margin="10,0" VerticalAlignment="Center" TextWrapping="WrapWholeWords">
                                 <Run FontSize="18" FontWeight="Bold">Copyright</Run>
-                                <LineBreak/><Run FontSize="16">ⓒ2015~2018 Novang, Table from www.anissia.net</Run>
+                                <LineBreak/><Run FontSize="16">ⓒ2015~2019 Novang, Table from www.anissia.net</Run>
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Padding="5,10">
@@ -103,7 +103,7 @@
                         <StackPanel Orientation="Vertical" Padding="5,10">
                             <TextBlock Foreground="{StaticResource customBackgroundColor}" FontFamily="Assets/NotoSansCJKkr-Medium.otf#Noto Sans CJK KR Medium" Margin="10,0" VerticalAlignment="Center" TextWrapping="WrapWholeWords" IsTextSelectionEnabled="True">
                                 <Run FontSize="18" FontWeight="Bold">Link</Run>
-                                <LineBreak/><Run FontSize="16">http://blog.moeru.ga/ (Blog)</Run>
+                                <LineBreak/><Run FontSize="16">http://qkdxorjs1002.blog.me/ (Blog)</Run>
                                 <LineBreak/><Run FontSize="16">https://github.com/qkdxorjs1002 (Github)</Run>
                             </TextBlock>
                         </StackPanel>

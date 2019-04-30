@@ -27,8 +27,7 @@ namespace AniSched
 
     public sealed partial class MainPage : Page
     {
-        //const string URL_IMGSOURCE = "http://anisched.moeru.me/";
-        const string URL_IMGSOURCE = "http://test.istpikworld.net/~anisched/";
+        
 
         public MainPage()
         {
@@ -141,7 +140,7 @@ namespace AniSched
             SettingView.Visibility = Visibility.Collapsed;
 
             MainFunction.LoadList(CapListView, callerObject.i);
-            CapListImage.Source = new BitmapImage(new Uri(URL_IMGSOURCE + callerObject.i + ".jpg", UriKind.Absolute));
+            MainFunction.onnadaRequest(CapListImage , callerObject.s, callerObject.i);
             CaptionIDText.Text = callerObject.i.ToString();
             CapListTitle.Text = callerObject.s;
             CapListGenre.Text = callerObject.g;
@@ -163,7 +162,11 @@ namespace AniSched
 
             if (callerObject.a != "http://" && callerObject.a != null)
             {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri(callerObject.a));
+                try
+                {
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri(callerObject.a));
+                }
+                catch (Exception) { }
             }
 
         }
@@ -206,7 +209,7 @@ namespace AniSched
 
         private void CapListImage_ImageFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            CapListImage.Source = new BitmapImage(new Uri(URL_IMGSOURCE + MainFunction.RandomImage() + ".png", UriKind.Absolute));
+            CapListImage.Source = new BitmapImage(MainFunction.RandomImage());
 
         }
 
@@ -331,6 +334,7 @@ namespace AniSched
     {
         const string STRING_LE404 = "[{\"s\":\"오류\",\"t\":\"원인\",\"g\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
         const string STRING_CE404 = "[{\"s\":\"오류\",\"d\":\"원인\",\"n\":\"서버에서 목록을 받아올 수 없습니다.\"}]";
+        const string URL_IMGSOURCE = "http://anisched.moeru.me/";
 
         public static ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
         public static StorageFolder localFolder = ApplicationData.Current.LocalFolder;
@@ -346,6 +350,7 @@ namespace AniSched
         static JsonParser jsonParser = new JsonParser();
         static DataRefiner dataRefiner = new DataRefiner();
         static DataBinder dataBinder = new DataBinder();
+        static OnnadaThumb onnadaThumb = new OnnadaThumb();
 
         public static void Painter()
         {
@@ -406,12 +411,12 @@ namespace AniSched
             return targetColor;
         }
 
-        public static String RandomImage()
+        public static Uri RandomImage()
         {
             Random rand = new Random();
             int targetNum = rand.Next() % 50;
 
-            return ("rand" + targetNum);
+            return new Uri(URL_IMGSOURCE + "rand" + targetNum + ".png", UriKind.Absolute);
         }
 
         public static void InitIndicator(string targetDay)
@@ -483,6 +488,11 @@ namespace AniSched
             dataRefiner.ListDataRefine(allListData);
             dataBinder.DataBind(targetObject, allListData, targetStr);
 
+        }
+
+        public async static void onnadaRequest(Image target, string title, int id)
+        {
+            target.Source = new BitmapImage(await onnadaThumb.Request(title, id));
         }
 
         public static void SearchList(ListView targetObject, JsType targetJsType, string targetStr)

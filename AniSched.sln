@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniSched", "AniSched\AniSched.csproj", "{88EF0CC6-1320-4B73-8034-E1FBF3DD3DF9}"
 EndProject
@@ -18,6 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{88EF0CC6-1320-4B73-8034-E1FBF3DD3DF9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{88EF0CC6-1320-4B73-8034-E1FBF3DD3DF9}.Debug|Any CPU.Build.0 = Debug|x86
+		{88EF0CC6-1320-4B73-8034-E1FBF3DD3DF9}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{88EF0CC6-1320-4B73-8034-E1FBF3DD3DF9}.Debug|ARM.ActiveCfg = Debug|ARM
 		{88EF0CC6-1320-4B73-8034-E1FBF3DD3DF9}.Debug|ARM.Build.0 = Debug|ARM
 		{88EF0CC6-1320-4B73-8034-E1FBF3DD3DF9}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -40,5 +42,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {553079F9-6114-4DAC-9070-339461673C39}
 	EndGlobalSection
 EndGlobal
